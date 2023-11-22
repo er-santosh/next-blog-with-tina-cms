@@ -1,13 +1,9 @@
-import BlogPosts from "@/components/BlogPosts"
-import FeaturedPost from "@/components/FeaturedPost"
-import NewsLetter from "@/components/NewsLetter"
+import client from "@/tina/__generated__/client"
+import HomePageComponent from "@/components/app/HomePageComponent"
 
-export default function Home() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <FeaturedPost />
-      <BlogPosts />
-      <NewsLetter />
-    </main>
-  )
+export default async function Home() {
+  const result = await client.queries.page({
+    relativePath: "home.mdx",
+  })
+  return <HomePageComponent {...result} />
 }
