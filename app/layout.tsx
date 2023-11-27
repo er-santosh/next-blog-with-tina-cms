@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import { Inter } from "next/font/google"
 import "./globals.css"
 import Navbar from "@/components/Navbar"
-import client from "@/tina/__generated__/client"
+import { client } from "@/tina/__generated__/databaseClient"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -22,7 +22,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Navbar {...result} />
+        <Navbar {...JSON.parse(JSON.stringify(result))} />
         <main className="flex min-h-screen flex-col items-center justify-between p-24">
           {children}
         </main>

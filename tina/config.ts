@@ -1,20 +1,19 @@
-import { defineConfig } from "tinacms"
-import schema from "./schema"
-// Your hosting provider likely exposes this as an environment variable
-const branch =
-  process.env.GITHUB_BRANCH ||
-  process.env.VERCEL_GIT_COMMIT_REF ||
-  process.env.HEAD ||
-  "main"
+import {
+  UsernamePasswordAuthJSProvider,
+  TinaUserCollection,
+} from "tinacms-authjs/dist/tinacms"
+import { defineConfig, LocalAuthProvider } from "tinacms"
+import navCollection from "./collections/nav"
+import pageCollection from "./collections/page"
+import postCollection from "./collections/post"
+import authorCollection from "./collections/author"
 
+const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true"
 export default defineConfig({
-  branch,
-
-  // Get this from tina.io
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID,
-  // Get this from tina.io
-  token: process.env.TINA_TOKEN,
-
+  authProvider: isLocal
+    ? new LocalAuthProvider()
+    : new UsernamePasswordAuthJSProvider(),
+  contentApiUrlOverride: "/api/tina/gql",
   build: {
     outputFolder: "admin",
     publicFolder: "public",
@@ -27,14 +26,12 @@ export default defineConfig({
   },
   // See docs on content modeling for more info on how to setup new content models: https://tina.io/docs/schema/
   schema: {
-    ...schema,
-  },
-  search: {
-    tina: {
-      indexerToken: process.env.TINA_SEARCH_TOKEN,
-      stopwordLanguages: ["eng"],
-    },
-    indexBatchSize: 100,
-    maxSearchIndexFieldLength: 100,
+    collections: [
+      TinaUserCollection,
+      navCollection,
+      pageCollection,
+      postCollection,
+      authorCollection,
+    ],
   },
 })

@@ -1,5 +1,5 @@
 import BlogPageComponent from "@/components/app/BlogPageComponent"
-import client from "../../../tina/__generated__/client"
+import { client } from "../../../tina/__generated__/databaseClient"
 
 const BlogPage = async ({ params }: { params: { filename: string } }) => {
   const res = await client.queries.post({
@@ -8,7 +8,7 @@ const BlogPage = async ({ params }: { params: { filename: string } }) => {
 
   return (
     <>
-      <BlogPageComponent {...res} />
+      <BlogPageComponent {...JSON.parse(JSON.stringify(res))} />
     </>
   )
 }
