@@ -1,9 +1,10 @@
-import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer";
-import { AuthJsBackendAuthProvider, TinaAuthJSOptions } from "tinacms-authjs";
+import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer"
+import { AuthJsBackendAuthProvider, TinaAuthJSOptions } from "tinacms-authjs"
 
-import databaseClient from "../../../tina/__generated__/databaseClient";
+import databaseClient from "../../../tina/__generated__/databaseClient"
+import { IncomingMessage, ServerResponse } from "http"
 
-const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
+const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true"
 
 const handler = TinaNodeBackend({
   authProvider: isLocal
@@ -11,13 +12,14 @@ const handler = TinaNodeBackend({
     : AuthJsBackendAuthProvider({
         authOptions: TinaAuthJSOptions({
           databaseClient: databaseClient,
-          secret: process.env.NEXTAUTH_SECRET,
+          secret: process.env.NEXTAUTH_SECRET as string,
         }),
       }),
   databaseClient,
-});
+})
 
-export default (req, res) => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default (req: IncomingMessage, res: ServerResponse<IncomingMessage>) => {
   // Modify the request here if you need to
-  return handler(req, res);
-};
+  return handler(req, res)
+}

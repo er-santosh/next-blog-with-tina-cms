@@ -8,7 +8,7 @@ const PostAuthor = (post: Post) => {
       data-tina-field={post.author && tinaField(post.author, "name")}
       className="font-semibold"
     >
-      Author: {post.author?.name}
+      Author: {post?.author?.name}
     </span>
   )
 }

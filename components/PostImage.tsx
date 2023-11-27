@@ -14,7 +14,7 @@ const PostImage = ({ post, className }: { post: Post; className?: string }) => {
       <Image
         fill
         className="object-cover rounded-lg"
-        src={post.image || ""}
+        src={post?.image || ""}
         alt="post image"
       />
     </div>
