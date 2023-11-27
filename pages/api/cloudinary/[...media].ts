@@ -13,13 +13,16 @@ export default createMediaHandler({
   api_secret: process.env.CLOUDINARY_API_SECRET as string,
   authorized: async (req, _res) => {
     try {
-      if (process.env.NODE_ENV == "development") {
-        return true
-      }
+      //   if (process.env.NODE_ENV == "development") {
+      //     return true
+      //   }
+      // TODO: return according to the authorization
+      //   const user = await isAuthorized(req)
 
-      const user = await isAuthorized(req)
+      //   console.log(user)
 
-      return !!(user && user.verified)
+      //   return !!(user && user.verified)
+      return true
     } catch (e) {
       return false
     }
